@@ -22,8 +22,8 @@ def log_option(opts, attr):
 
 class Options(object):
     def __init__(self, work):
-        self.pattern = r'(.*)'
-        self.replace = r'\1'
+        self.pattern = None
+        self.replace = None
         self.nomatch = None
         self.exclude = []
         self.top     = os.path.realpath(os.path.expanduser(work))
@@ -42,9 +42,9 @@ def get_arguments(work, args=None):
     opts = Options(work)
 
     # regular expressions
-    parser.add_argument(dest='pattern', type=str, nargs='?', default=opts.pattern,
+    parser.add_argument(dest='pattern', type=str,
         help='expression: pattern')
-    parser.add_argument(dest='replace', type=str, nargs='?', default=opts.replace,
+    parser.add_argument(dest='replace', type=str,
         help='expression: replace')
     parser.add_argument('--nomatch', type=str, default=opts.nomatch,
         help='expression: nomatch')
