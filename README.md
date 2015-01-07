@@ -7,10 +7,13 @@ usage: pyrename.py [-h] [--nomatch NOMATCH]
                    [-t TOP] [-r]
                    [-d | -b]
                    [-f] [-i] [-s]
-                   [pattern] [replace]
+                   pattern replace
 
 Rename files or directories using regular expression.
 Does nothing without the --force option.
+
+example:
+    ./pyrename.py '(.*)\.py' '\g<1>_renamed.py'
 
 positional arguments:
   pattern               expression: pattern
