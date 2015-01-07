@@ -2,6 +2,10 @@
 """
 Rename files or directories using regular expression.
 Does nothing without the --force option.
+
+example:
+    ./pyrename.py '(.*)\.py' '\g<1>_renamed.py'
+
 """
 import itertools
 import argparse
