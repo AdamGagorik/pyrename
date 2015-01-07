@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 Rename files or directories using regular expression.
 """
