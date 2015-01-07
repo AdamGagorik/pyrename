@@ -22,7 +22,14 @@ def setup_logging():
 setup_logging()
 
 def log_option(opts, attr):
-    logging.info('%-10s = %s', attr, getattr(opts, attr))
+    obj = getattr(opts, attr)
+
+    if isinstance(obj, list) or isinstance(obj, tuple):
+        for i, item in enumerate(obj):
+            logging.info('%-10s = %s', '{}[{:d}]'.format(attr, i), obj[i])
+        return
+
+    logging.info('%-10s = %s', attr, obj)
 
 class Options(object):
     def __init__(self, work):
@@ -95,12 +102,15 @@ def get_arguments(work, args=None):
     # log options
     log_option(opts, 'pattern')
     log_option(opts, 'replace')
+    log_option(opts, 'nomatch')
     log_option(opts, 'top')
 
     log_option(opts, 'recursive')
     log_option(opts, 'files')
     log_option(opts, 'dirs')
     log_option(opts, 'both')
+
+    log_option(opts, 'exclude')
 
     log_option(opts, 'force')
     log_option(opts, 'ignorecase')
