@@ -106,6 +106,10 @@ def get_arguments(work, args=None):
     # fix path
     opts.top = os.path.realpath(opts.top)
 
+    # fix exclude
+    opts.exclude = set(opts.exclude)
+    opts.exclude.add(os.path.basename(__file__))
+
     # log options
     log_option(opts, 'pattern')
     log_option(opts, 'replace')
