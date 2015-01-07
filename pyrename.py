@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """
 Rename files or directories using regular expression.
+Does nothing without the --force option.
 """
 import itertools
 import argparse
