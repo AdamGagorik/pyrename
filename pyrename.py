@@ -29,6 +29,13 @@ def log_option(opts, attr):
             logging.info('%-10s = %s', '{}[{:d}]'.format(attr, i), obj[i])
         return
 
+    if isinstance(obj, set):
+        i = 0
+        for item in obj:
+            logging.info('%-10s = %s', '{}[{:d}]'.format(attr, i), item)
+            i += 1
+        return
+
     logging.info('%-10s = %s', attr, obj)
 
 class Options(object):
