@@ -267,5 +267,7 @@ def main(args=None):
 if __name__ == '__main__':
     try:
         main()
+    except SystemExit:
+        pass
     except:
         logging.exception('caught unhandled exception')
