@@ -32,3 +32,17 @@ optional arguments:
   -i, --ignorecase      ignore case
   -s, --silent          silent
 ```
+
+## Examples
+
+* You should use *()* to capture **groups** in the pattern string.
+* Use *\\#* or *\\g<\#>* to **reference** groups in the replace string.
+ 
+ ```bash
+ ./pyrename.py '(.*)\.py' '\g<1>_renamed.py'
+ ```
+
+* Nothing will ever happen unless you use the *--force* option.
+ ```bash
+ ./pyrename.py '(.*)\.py' '\g<1>_renamed.py' --force
+ ```
