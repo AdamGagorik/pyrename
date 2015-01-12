@@ -261,19 +261,27 @@ def main(args=None):
         error = True
 
     # check if old paths exist
-    try:
-        for root, base, path in opaths:
+    found = []
+    for root, base, path in opaths:
+        try:
             assert os.path.exists(path)
-    except AssertionError:
-        logging.error('some old paths do not exist')
+        except AssertionError:
+            found.append(path)
+    if found:
+        logging.error('some old paths do not exist\n\n\t%s\n',
+            '\n\t'.join(found))
         error = True
 
     # check if new paths exist
-    try:
-        for root, base, path in npaths:
-           assert not os.path.exists(path)
-    except AssertionError:
-        logging.error('some new paths already exist')
+    found = []
+    for root, base, path in npaths:
+        try:
+            assert not os.path.exists(path)
+        except AssertionError:
+            found.append(path)
+    if found:
+        logging.error('some new paths already exist\n\n\t%s\n',
+            '\n\t'.join(found))
         error = True
 
     # stop if there were errors
