@@ -7,6 +7,7 @@ example:
     ./pyrename.py '(.*)\.py' '\g<1>_renamed.py'
 
 """
+from subprocess import check_call
 import itertools
 import argparse
 import logging
@@ -38,6 +39,14 @@ def log_option(opts, attr):
 
     logging.info('%-10s = %s', attr, obj)
 
+def move(opath, npath, git=False):
+    if git:
+        logging.info('\n\n\tgit mv %s\n\t       %s\n', opath, npath)
+        check_call(['git', 'mv', opath, npath])
+    else:
+        logging.info('\n\n\tmv %s\n\t   %s\n', opath, npath)
+        shutil.move(ipath, opath)
+
 class Options(object):
     def __init__(self, work):
         self.pattern = None
@@ -53,6 +62,7 @@ class Options(object):
         self.force      = False
         self.ignorecase = False
         self.silent     = False
+        self.git        = False
 
 def get_arguments(work, args=None):
     parser = argparse.ArgumentParser(description=__doc__,
@@ -84,6 +94,8 @@ def get_arguments(work, args=None):
     # mode
     parser.add_argument('-f', '--force', action='store_true',
         help='rename files')
+    parser.add_argument('-g', '--git', action='store_true',
+        help='use git mv')
     parser.add_argument('-i', '--ignorecase', action='store_true',
         help='ignore case')
     parser.add_argument('-s', '--silent', action='store_true',
@@ -292,9 +304,7 @@ def main(args=None):
     if opts.force:
         logging.info('moving paths!')
         for (oroot, obase, opath), (nroot, nbase, npath) in zip(opaths, npaths):
-            logging.info('\n\n\tmv %s\n\t   %s\n', opath, npath)
-            shutil.move(opath, npath)
-            pass
+            move(opath, npath, git=opts.git)
     else:
         logging.info('\n\n\tThis was a dry run, please use --force to perform renaming\n')
 
