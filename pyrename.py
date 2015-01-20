@@ -45,7 +45,7 @@ def move(opath, npath, git=False):
         check_call(['git', 'mv', opath, npath])
     else:
         logging.info('\n\n\tmv %s\n\t   %s\n', opath, npath)
-        shutil.move(ipath, opath)
+        shutil.move(opath, npath)
 
 class Options(object):
     def __init__(self, work):
