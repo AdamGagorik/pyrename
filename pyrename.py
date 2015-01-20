@@ -63,6 +63,7 @@ class Options(object):
         self.ignorecase = False
         self.silent     = False
         self.git        = False
+        self.func       = False
 
 def get_arguments(work, args=None):
     parser = argparse.ArgumentParser(description=__doc__,
@@ -100,6 +101,8 @@ def get_arguments(work, args=None):
         help='ignore case')
     parser.add_argument('-s', '--silent', action='store_true',
         help='silent')
+    parser.add_argument('-x', '--func', action='store_true',
+        help='replace pattern is lambda x : {replace}')
 
     # parse
     parser.parse_args(args, namespace=opts)
@@ -126,17 +129,19 @@ def get_arguments(work, args=None):
     log_option(opts, 'pattern')
     log_option(opts, 'replace')
     log_option(opts, 'nomatch')
-    log_option(opts, 'top')
+    log_option(opts, 'exclude')
 
+    log_option(opts, 'top')
     log_option(opts, 'recursive')
-    log_option(opts, 'files')
+
     log_option(opts, 'dirs')
     log_option(opts, 'both')
 
-    log_option(opts, 'exclude')
-
     log_option(opts, 'force')
+    log_option(opts, 'git')
     log_option(opts, 'ignorecase')
+    log_option(opts, 'silent')
+    log_option(opts, 'func')
 
     return opts
 
@@ -188,6 +193,10 @@ def main(args=None):
             regex2 = re.compile(opts.nomatch)
         except TypeError:
             regex2 = None
+
+    # compile replace
+    if opts.func:
+        opts.replace = eval('lambda x : {}'.format(opts.replace))
 
     # record errors
     error = False
