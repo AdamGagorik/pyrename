@@ -7,6 +7,9 @@ help:
 	@echo "[targets]"
 	@echo "  tests"
 	@echo "  help"
+	@echo "  clean"
+	@echo "  install"
+	@echo "  bin"
 
 .PHONY : test
 test: tests
