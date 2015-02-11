@@ -10,8 +10,11 @@ import logging
 import os
 import re
 
+from .. import logutils
 from .. import options
 from .. import utils
+
+logutils.setup_logging()
 
 def main(args=None):
     work = os.getcwd()
