@@ -1,25 +1,19 @@
-FNAME=pyrename.py
-BPATH=${HOME}/bin
-IPATH=${PWD}/${FNAME}
-OPATH=${BPATH}/${FNAME}
+VERB = 0
+NOSE = nosetests --nologcapture --verbosity ${VERB}
 
 help:
-	@echo "[paths]"
-	@echo "  BPATH : ${BPATH}"
-	@echo "  IPATH : ${IPATH}"
-	@echo "  OPATH : ${OPATH}"
-	@echo ""
 	@echo "[targets]"
-	@echo "  clean"
-	@echo "  copy"
-	@echo "  link"
+	@echo "  tests"
 	@echo "  help"
 
-copy: clean
-	-cp ${IPATH} ${OPATH}
+.PHONY : test
+test: tests
 
-link: clean
-	-ln -s ${IPATH} ${OPATH}
+.PHONY : tests
+tests:
+	${NOSE} -w ./pyrename/tests/
 
+.PHONY : clean
 clean:
-	-rm ${OPATH}
+	-find ./pyrename -type f -name \*.pyc | xargs -I xxx rm xxx
+	-find ./pyrename -type d -name __pycache__ | xargs -I xxx rm -rf xxx
