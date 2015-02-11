@@ -1,5 +1,7 @@
-VERB = 0
-NOSE = nosetests --nologcapture --verbosity ${VERB}
+VERB  = 0
+NOSE  = nosetests --nologcapture --verbosity ${VERB}
+BPATH = ${CURDIR}/bin
+SPATH = ${BPATH}/pyrename
 
 help:
 	@echo "[targets]"
@@ -15,11 +17,17 @@ tests:
 
 .PHONY : bin
 bin: clean
-	mkdir ./bin
-	echo "#!/bin/bash" > ./bin/pyrename
-	echo "export PYTHONPATH=$$PYTHONPATH:${CURDIR}" >> ./bin/pyrename
-	echo "python3 -m pyrename.apps.main $$*" >> ./bin/pyrename
-	chmod +x ./bin/pyrename
+	mkdir ${BPATH}
+	echo '#!/bin/bash' > ${SPATH}
+	echo 'export PYTHONPATH=$$PYTHONPATH:${CURDIR}' >> ${SPATH}
+	echo 'python3 -m pyrename.apps.main $$*' >> ${SPATH}
+	chmod +x ${SPATH}
+
+.PHONY : install
+install: bin
+	-mkdir -p ${HOME}/bin
+	-rm ${HOME}/bin/pyrename
+	ln -s ${SPATH} ${HOME}/bin/pyrename
 
 .PHONY : clean
 clean:
