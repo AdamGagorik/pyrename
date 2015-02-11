@@ -21,7 +21,7 @@ tests:
 .PHONY : bin
 bin: clean
 	mkdir ${BPATH}
-	echo '#!/bin/bash' > ${SPATH}
+	echo '#!/bin/bash -f' > ${SPATH}
 	echo 'export PYTHONPATH=$$PYTHONPATH:${CURDIR}' >> ${SPATH}
 	echo 'python3 -m pyrename.apps.main $$*' >> ${SPATH}
 	chmod +x ${SPATH}
