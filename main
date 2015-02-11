@@ -1,2 +1,4 @@
 #!/bin/bash
-python3 -m pyrename.apps.main
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+export PYTHONPATH=$PYTHONPATH:$DIR
+python3 -m pyrename.apps.main $*
