@@ -3,6 +3,10 @@ import warnings
 import logging
 
 
+lfmt = '[%(asctime)s][%(process)5d][%(levelname)-5s]: %(message)s'
+dfmt = "%Y-%m-%d %H:%M:%S"
+
+
 def setup_logging(**kwargs):
     _kwargs = dict(level=logging.INFO, format=lfmt, datefmt=dfmt)
     _kwargs.update(**kwargs)
